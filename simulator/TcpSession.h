@@ -15,9 +15,9 @@ public:
     tcp::socket& socket();
     void start();
 private:
-    void handle_read(const boost::system::error_code& error, 
-            size_t bytes_transferred);
-    void handle_write(const boost::system::error_code& error);
+    void run();
+    void handle_read(size_t bytes_transferred);
+    void handle_write();
     
     tcp::socket _socket;
     enum { max_length = 1024 };

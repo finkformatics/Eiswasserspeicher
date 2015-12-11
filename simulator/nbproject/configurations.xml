@@ -45,6 +45,7 @@
           <linkerLibItems>
             <linkerOptionItem>-lboost_system</linkerOptionItem>
             <linkerOptionItem>-lpthread</linkerOptionItem>
+            <linkerOptionItem>-lboost_thread</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

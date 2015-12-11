@@ -8,7 +8,6 @@ int main(int argc, char** argv) {
     cout << "Simulator starting..." << endl;
     Simulator simulator;
     simulator.run();
-    cout << "Simulator started." << endl;
     return 0;
 }
 
