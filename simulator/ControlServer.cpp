@@ -16,7 +16,7 @@ ControlServer::ControlServer(boost::asio::io_service& io_service, short port)
 }
 
 void ControlServer::start_pairing() {
-    TcpSession* new_session = new TcpSession(_io_service);
+    TcpSession* new_session = new TcpSession(_io_service, this);
     boost::system::error_code ec;
     _acceptor.accept(new_session->socket(), ec);
     handle_accept(new_session, ec);
@@ -26,9 +26,10 @@ void ControlServer::handle_accept(TcpSession* new_session,
         const boost::system::error_code& error) {
     if (!error) {
         cout << "Control client asking for pairing..." << endl;
-        new_session->start();
+        boost::thread(boost::bind(&TcpSession::start, new_session));
     } else {
         cout << error << endl;
         delete new_session;
     }
+    start_pairing();
 }

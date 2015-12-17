@@ -4,9 +4,9 @@
 
 using namespace std;
 
-TcpSession::TcpSession(boost::asio::io_service& io_service)
+TcpSession::TcpSession(boost::asio::io_service& io_service, ControlServer* server)
         : _socket(io_service) {
-    // Nothing to do
+    this->server = server;
 }
 
 tcp::socket& TcpSession::socket() {
@@ -25,7 +25,9 @@ void TcpSession::start() {
 }
 
 void TcpSession::handle_read(size_t bytes_transferred) {
-    cout << "Control client wrote: '" << _data << "'" << endl;
+    char* command;
+    strncpy(command, _data, strlen(_data) - 1);
+    cout << "Control client sent command: '" << command << "'" << endl;
     _socket.write_some(boost::asio::buffer(_data, bytes_transferred));
     handle_write();
 }

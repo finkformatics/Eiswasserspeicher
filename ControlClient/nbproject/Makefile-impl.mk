@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=simulator
+PROJECTNAME=ControlClient
 
 # Active Configuration
 DEFAULTCONF=Debug

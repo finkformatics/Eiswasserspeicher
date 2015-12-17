@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=simulator
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/simulator
+CND_ARTIFACT_NAME_Debug=controlclient
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/controlclient
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=simulator.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/simulator.tar
+CND_PACKAGE_NAME_Debug=controlclient.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/controlclient.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=simulator
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/simulator
+CND_ARTIFACT_NAME_Release=controlclient
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/controlclient
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=simulator.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/simulator.tar
+CND_PACKAGE_NAME_Release=controlclient.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/controlclient.tar
 #
 # include compiler specific variables
 #

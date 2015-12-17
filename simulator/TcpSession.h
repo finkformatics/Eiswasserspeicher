@@ -7,11 +7,13 @@
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 
+#include "ControlServer.h"
+
 using boost::asio::ip::tcp;
 
 class TcpSession {
 public:
-    TcpSession(boost::asio::io_service& io_service);
+    TcpSession(boost::asio::io_service& io_service, ControlServer* server);
     tcp::socket& socket();
     void start();
 private:
@@ -22,6 +24,7 @@ private:
     tcp::socket _socket;
     enum { max_length = 1024 };
     char _data[max_length];
+    ControlServer* server;
 };
 
 #endif	/* TCPSESSION_H */
