@@ -1,25 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+#include <iostream>
 
-/* 
- * File:   main.cpp
- * Author: lukas
- *
- * Created on 17. Dezember 2015, 10:40
- */
-
-#include <cstdlib>
+#include "ControlClient.h"
 
 using namespace std;
 
-/*
- * 
- */
 int main(int argc, char** argv) {
-
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " <path/to/config_file>" << endl;
+        return 1;
+    }
+    cout << "Control client started." << endl;
+    ControlClient client(argv[1]);
+    client.run();
     return 0;
 }
 

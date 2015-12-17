@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>ControlClient.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>ControlClient.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -35,7 +37,18 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lpthread</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
+      <item path="ControlClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ControlClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -59,6 +72,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="ControlClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ControlClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>

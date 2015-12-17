@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/ControlServer.o \
 	${OBJECTDIR}/Simulator.o \
+	${OBJECTDIR}/TcpSession.o \
 	${OBJECTDIR}/main.o
 
 
@@ -73,6 +74,11 @@ ${OBJECTDIR}/Simulator.o: Simulator.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Simulator.o Simulator.cpp
+
+${OBJECTDIR}/TcpSession.o: TcpSession.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TcpSession.o TcpSession.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>ControlServer.h</itemPath>
       <itemPath>Simulator.h</itemPath>
+      <itemPath>TcpSession.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,6 +17,7 @@
                    projectFiles="true">
       <itemPath>ControlServer.cpp</itemPath>
       <itemPath>Simulator.cpp</itemPath>
+      <itemPath>TcpSession.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -55,6 +57,10 @@
       </item>
       <item path="Simulator.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TcpSession.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TcpSession.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -91,6 +97,10 @@
       <item path="Simulator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Simulator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TcpSession.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TcpSession.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
