@@ -12,7 +12,7 @@ Simulator::Simulator() : _port(55555), _control_server(_io_service, _port) {
 
 void Simulator::run() {
     cout << "Simulator started." << endl;
-    boost::posix_time::seconds sleepTime(3);
+    boost::posix_time::seconds sleepTime(30);
     while (true) {
         cout << "Running..." << endl;
         boost::this_thread::sleep(sleepTime);
