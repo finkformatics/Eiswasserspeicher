@@ -31,10 +31,10 @@ void TcpSession::start() {
 void TcpSession::handle_read(size_t bytes_transferred, const boost::system::error_code& error) {
     if (!error) {
         char* command;
-        strncpy(command, _data, strlen(_data) - 1);
+        strncpy(command, _data, strlen(_data));
         cout << "Control client " << _socket.remote_endpoint().port() << " sent command: " << command  << endl;
         boost::system::error_code ec;
-        _socket.write_some(boost::asio::buffer("OK\n", 3), ec);
+        _socket.write_some(boost::asio::buffer("OK", 2), ec);
         handle_write(ec);
     } else {
         delete this;
