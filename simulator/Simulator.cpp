@@ -6,15 +6,18 @@
 
 using namespace std;
 
-Simulator::Simulator() : _port(55555), _control_server(_io_service, _port) {
-    _io_service.run();
+Simulator::Simulator(const char* config_file) : config(config_file), 
+        controlServer(ioService, config.getPort()), 
+        reservoir(&config) {
+    ioService.run();
+    controlServer.run();
 }
 
 void Simulator::run() {
     cout << "Simulator started." << endl;
-    boost::posix_time::seconds sleepTime(30);
+    boost::posix_time::seconds sleepTime(5);
     while (true) {
-        cout << "Running..." << endl;
         boost::this_thread::sleep(sleepTime);
+        reservoir.step();
     }
 }

@@ -4,7 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Configuration.h</itemPath>
       <itemPath>ControlServer.h</itemPath>
+      <itemPath>Pump.h</itemPath>
+      <itemPath>Reservoir.h</itemPath>
       <itemPath>Simulator.h</itemPath>
       <itemPath>TcpSession.h</itemPath>
     </logicalFolder>
@@ -15,7 +18,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Configuration.cpp</itemPath>
       <itemPath>ControlServer.cpp</itemPath>
+      <itemPath>Pump.cpp</itemPath>
+      <itemPath>Reservoir.cpp</itemPath>
       <itemPath>Simulator.cpp</itemPath>
       <itemPath>TcpSession.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -46,12 +52,25 @@
             <linkerOptionItem>-lboost_system</linkerOptionItem>
             <linkerOptionItem>-lpthread</linkerOptionItem>
             <linkerOptionItem>-lboost_thread</linkerOptionItem>
+            <linkerOptionItem>-lboost_program_options</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Configuration.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Configuration.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ControlServer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ControlServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pump.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pump.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Reservoir.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Reservoir.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Simulator.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -90,9 +109,21 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Configuration.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Configuration.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ControlServer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ControlServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pump.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pump.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Reservoir.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Reservoir.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Simulator.cpp" ex="false" tool="1" flavor2="0">
       </item>

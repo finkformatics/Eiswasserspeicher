@@ -20,7 +20,7 @@ private:
     boost::asio::io_service _io_service;
     tcp::socket _socket;
     enum { max_length = 1024 };
-    int menu();
+    string menu();
 };
 
 #endif /* CONTROLCLIENT_H */

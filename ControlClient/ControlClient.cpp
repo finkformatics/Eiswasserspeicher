@@ -41,24 +41,18 @@ void ControlClient::run() {
     cout << "Control client started" << endl;
     for (;;) {
         try {
-            int choice = menu();
-            if (choice == -1) {
+            string choice = menu();
+            if (choice == "NONE") {
+                continue;
+            } else if (choice == "EXIT") {
                 break;
-            } else if (choice == -2) {
-                continue;
-            } else if (choice < 0 || (choice > 0 && choice < _option_power_min) || choice > 100) {
-                cerr << "Minimum percentage power is " << _option_power_min << "%!" << endl;
-                continue;
             }
-            string request;
-            char request_char_arr[max_length];
-            sprintf(request_char_arr, "CMD:POWER:%03d#", choice);
-            request += request_char_arr;
-            cout << "Sending command: " << request << endl;;
-            boost::asio::write(_socket, boost::asio::buffer(request.c_str(), request.length()));
+            cout << "Sending command: " << choice << endl;;
+            boost::asio::write(_socket, boost::asio::buffer(choice.c_str(), choice.length()));
 
-            char reply[max_length];
-            size_t reply_length = boost::asio::read(_socket, boost::asio::buffer(reply, max_length));
+            // 3 hardcoded
+            char reply[3];
+            size_t reply_length = boost::asio::read(_socket, boost::asio::buffer(reply, 3));
             cout << "Server replied: ";
             cout.write(reply, reply_length);
             cout << endl;
@@ -70,35 +64,26 @@ void ControlClient::run() {
     delete this;
 }
 
-int ControlClient::menu() {
+string ControlClient::menu() {
     cout << "You have the following options:" << endl;
     cout << "[1] ON" << endl;
     cout << "[2] OFF" << endl;
-    cout << "[3] Percentage Power" << endl;
     cout << "[X] Exit" << endl;
     cout << "Your choice: " << endl;
     string choice;
     cin >> choice;
     if (choice == "X" || choice == "x") {
-        return -1;
+        return "EXIT";
     }
     char* choiceCString = (char*)choice.c_str();
     long int choiceInt = strtol(choiceCString, &choiceCString, 10);
     if (choiceInt == 1) {
-        return 100;
+        return "ON";
     }
     if (choiceInt == 2) {
-        return 0;
-    }
-    if (choiceInt == 3) {
-        cout << "Provide a percentage power between " << _option_power_min << " and 100: ";
-        string input;
-        cin >> input;
-        char* inputCString = (char*)input.c_str();
-        int percentage = strtol(inputCString, &inputCString, 10);
-        return percentage;
+        return "OFF";
     }
     cerr << "Option not supported!" << endl;
-    return -2;
+    return "NONE";
 }
 

@@ -10,6 +10,7 @@ using boost::asio::ip::tcp;
 class ControlServer {
 public:
     ControlServer(boost::asio::io_service& io_service, short port);
+    void run();
 private:
     void start_pairing();
     void handle_accept(TcpSession* new_session, const boost::system::error_code& error);

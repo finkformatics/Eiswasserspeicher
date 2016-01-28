@@ -9,12 +9,16 @@ using namespace std;
 ControlServer::ControlServer(boost::asio::io_service& io_service, short port) 
       : _io_service(io_service), 
         _acceptor(io_service, tcp::endpoint(tcp::v4(), port)) {
+}
+
+void ControlServer::run() {
     cout << "Control server started." << endl;
     cout << "Waiting for control client..." << endl;
     boost::thread(boost::bind(&ControlServer::start_pairing, this));
 }
 
 void ControlServer::start_pairing() {
+    // Could restrict to just one client
     TcpSession* new_session = new TcpSession(_io_service, this);
     boost::system::error_code ec;
     _acceptor.accept(new_session->socket(), ec);

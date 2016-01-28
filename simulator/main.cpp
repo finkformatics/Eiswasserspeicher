@@ -5,8 +5,11 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    cout << "Simulator starting..." << endl;
-    Simulator simulator;
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " <path/to/config_file>" << endl;
+        return 1;
+    }
+    Simulator simulator(argv[1]);
     simulator.run();
     return 0;
 }

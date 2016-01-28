@@ -4,17 +4,20 @@
 #include <boost/asio.hpp>
 
 #include "ControlServer.h"
+#include "Configuration.h"
+#include "Reservoir.h"
 
 class Simulator {
 public:
-    Simulator();
+    Simulator(const char* config_file);
     void run();
 private:
-    void start_server();
+    Configuration config;
+    boost::asio::io_service ioService;
+    ControlServer controlServer;
+    Reservoir reservoir;
     
-    short _port;
-    boost::asio::io_service _io_service;
-    ControlServer _control_server;
+    void start_server();
 };
 
 #endif	/* SIMULATOR_H */

@@ -35,7 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Configuration.o \
 	${OBJECTDIR}/ControlServer.o \
+	${OBJECTDIR}/Pump.o \
+	${OBJECTDIR}/Reservoir.o \
 	${OBJECTDIR}/Simulator.o \
 	${OBJECTDIR}/TcpSession.o \
 	${OBJECTDIR}/main.o
@@ -65,10 +68,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulator: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulator ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Configuration.o: Configuration.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Configuration.o Configuration.cpp
+
 ${OBJECTDIR}/ControlServer.o: ControlServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ControlServer.o ControlServer.cpp
+
+${OBJECTDIR}/Pump.o: Pump.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Pump.o Pump.cpp
+
+${OBJECTDIR}/Reservoir.o: Reservoir.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Reservoir.o Reservoir.cpp
 
 ${OBJECTDIR}/Simulator.o: Simulator.cpp 
 	${MKDIR} -p ${OBJECTDIR}
