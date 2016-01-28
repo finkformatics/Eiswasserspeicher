@@ -16,7 +16,7 @@ double Pump::getM() {
 }
 
 bool Pump::isOn() {
-    return percent > 0;
+    return (percent > 0);
 }
 
 void Pump::setPercent(int p) {

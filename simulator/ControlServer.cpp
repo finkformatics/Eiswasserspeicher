@@ -6,9 +6,10 @@
 
 using namespace std;
 
-ControlServer::ControlServer(boost::asio::io_service& io_service, short port) 
+ControlServer::ControlServer(Simulator* simulator, boost::asio::io_service& io_service, short port) 
       : _io_service(io_service), 
         _acceptor(io_service, tcp::endpoint(tcp::v4(), port)) {
+    this->simulator = simulator;
 }
 
 void ControlServer::run() {
@@ -19,7 +20,7 @@ void ControlServer::run() {
 
 void ControlServer::start_pairing() {
     // Could restrict to just one client
-    TcpSession* new_session = new TcpSession(_io_service, this);
+    TcpSession* new_session = new TcpSession(_io_service, simulator);
     boost::system::error_code ec;
     _acceptor.accept(new_session->socket(), ec);
     handle_accept(new_session, ec);

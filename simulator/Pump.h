@@ -3,7 +3,6 @@
 
 #include "Configuration.h"
 
-
 class Pump {
 public:
     Pump(Configuration* config);

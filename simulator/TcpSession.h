@@ -3,13 +3,15 @@
 
 #include <boost/asio.hpp>
 
-using boost::asio::ip::tcp;
+class TcpSession;
 
-class ControlServer;
+#include "Simulator.h"
+
+using boost::asio::ip::tcp;
 
 class TcpSession {
 public:
-    TcpSession(boost::asio::io_service& io_service, ControlServer* server);
+    TcpSession(boost::asio::io_service& io_service, Simulator* simulator);
     virtual ~TcpSession();
     tcp::socket& socket();
     void start();
@@ -21,7 +23,7 @@ private:
     tcp::socket _socket;
     enum { max_length = 1024 };
     char _data[max_length];
-    ControlServer* server;
+    Simulator* simulator;
 };
 
 #endif /* TCPSESSION_H */

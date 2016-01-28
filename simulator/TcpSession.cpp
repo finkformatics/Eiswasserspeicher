@@ -4,9 +4,9 @@
 
 using namespace std;
 
-TcpSession::TcpSession(boost::asio::io_service& io_service, ControlServer* server)
+TcpSession::TcpSession(boost::asio::io_service& io_service, Simulator* simulator)
         : _socket(io_service) {
-    this->server = server;
+    this->simulator = simulator;
 }
 
 TcpSession::~TcpSession() {
@@ -33,6 +33,7 @@ void TcpSession::handle_read(size_t bytes_transferred, const boost::system::erro
         char* command;
         strncpy(command, _data, strlen(_data));
         cout << "Control client " << _socket.remote_endpoint().port() << " sent command: " << command  << endl;
+        simulator->command(command);
         boost::system::error_code ec;
         _socket.write_some(boost::asio::buffer("OK\n", 3), ec);
         handle_write(ec);

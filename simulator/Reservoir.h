@@ -8,6 +8,8 @@ class Reservoir {
 public:
     Reservoir(Configuration* config);
     void step();
+    void enablePumps();
+    void disablePumps();
 private:
     Configuration* config;
     Pump pump1;

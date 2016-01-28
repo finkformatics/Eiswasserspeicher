@@ -16,6 +16,7 @@ Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c) {
 }
 
 void Reservoir::step() {
+    cout << "Reservoir step - pump1: " << pump1.isOn() << ", pump2: " << pump2.isOn() << ", Q_s: " << Q_s << endl;
     if ((pump1.isOn() || pump2.isOn()) && Q_s > 0) {
         cout << "Pump on, let's cool" << endl;
         cool();
@@ -25,6 +26,18 @@ void Reservoir::step() {
     }
 }
 
+void Reservoir::enablePumps() {
+    pump1.on();
+    pump2.on();
+    cout << "Enabling pumps" << endl;
+}
+
+void Reservoir::disablePumps() {
+    pump1.off();
+    pump2.off();
+    cout << "Disabled pumps" << endl;
+}
+
 void Reservoir::cool() {
     double Q_w = (pump1.getM() + pump2.getM()) * config->getC_p() * (config->getT_m() - config->getT_w()) * config->getStep();
     if (Q_w < Q_s) {
@@ -32,8 +45,10 @@ void Reservoir::cool() {
     } else {
         Q_s = 0;
     }
+    cout << "Cooled down: Q_s = " << Q_s << endl;
 }
 
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
+    cout << "Loaded: Q_s = " << Q_s << endl;
 }
