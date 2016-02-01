@@ -2,6 +2,7 @@
 #define	SIMULATOR_H
 
 #include <boost/asio.hpp>
+#include <string>
 
 class Simulator;
 
@@ -9,11 +10,13 @@ class Simulator;
 #include "Configuration.h"
 #include "Reservoir.h"
 
+using namespace std;
+
 class Simulator {
 public:
     Simulator(const char* config_file);
     void run();
-    void command(char* cmd);
+    void command(string cmd);
 private:
     Configuration config;
     boost::asio::io_service ioService;

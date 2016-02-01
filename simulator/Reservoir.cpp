@@ -1,6 +1,8 @@
 #include "Reservoir.h"
+#include "Logger.h"
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -16,26 +18,28 @@ Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c) {
 }
 
 void Reservoir::step() {
-    cout << "Reservoir step - pump1: " << pump1.isOn() << ", pump2: " << pump2.isOn() << ", Q_s: " << Q_s << endl;
     if ((pump1.isOn() || pump2.isOn()) && Q_s > 0) {
-        cout << "Pump on, let's cool" << endl;
+        Logger::debug("Cooling milk");
         cool();
     } else if(Q_s < Q_s_max) { // TODO: Zeitsteuerung (12 - 16 Uhr)
-        cout << "Loading cooler" << endl;
+        Logger::debug("Loading reservoir");
         load();
     }
+    ostringstream oss;
+    oss << "Q_s = " << Q_s;
+    Logger::debug(oss.str());
 }
 
 void Reservoir::enablePumps() {
     pump1.on();
     pump2.on();
-    cout << "Enabling pumps" << endl;
+    Logger::info("Enabled pumps");
 }
 
 void Reservoir::disablePumps() {
     pump1.off();
     pump2.off();
-    cout << "Disabled pumps" << endl;
+    Logger::info("Disabled pumps");
 }
 
 void Reservoir::cool() {
@@ -45,10 +49,8 @@ void Reservoir::cool() {
     } else {
         Q_s = 0;
     }
-    cout << "Cooled down: Q_s = " << Q_s << endl;
 }
 
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
-    cout << "Loaded: Q_s = " << Q_s << endl;
 }

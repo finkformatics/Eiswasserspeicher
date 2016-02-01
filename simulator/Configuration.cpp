@@ -2,8 +2,8 @@
 
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <iostream>
-#include <string>
+
+#include "Logger.h"
 
 using namespace std;
 
@@ -17,19 +17,20 @@ Configuration::Configuration(const char* config_file) {
 }
 
 void Configuration::load(const char* config_file) {
-    cout << "Reading configuration" << endl;
+    Logger::debug("Reading configuration file");
     po::options_description desc("Parameters");
     desc.add_options()
         ("controlserver.port", po::value<int>(&port), "server port")
+        ("controlserver.secret.token", po::value<string>(&secretToken), "server secret token")
         ("milk.temp.target", po::value<int>(&T_w), "target temp milk")
         ("milk.temp.input", po::value<int>(&T_m), "input temp milk")
         ("simulator.time.step", po::value<int>(&step), "input temp milk")
+        ("simulator.log.level", po::value<int>(&logLevel), "log level")
         ("reservoir.capacity", po::value<int>(&m_s), "reservoir capacity")
         ("reservoir.loadingtime", po::value<int>(&t_l), "reservoir loading time")
         ("reservoir.pumps.flow", po::value<double>(&Q), "pumps volume flow");
     po::variables_map vm;
     std::ifstream file(config_file, std::ifstream::in);
-    cout << "Reading program parameters" << endl;
     po::store(po::parse_config_file(file, desc), vm);
     file.close();
     po::notify(vm);

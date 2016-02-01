@@ -14,11 +14,12 @@ public:
     void run();
     void connect();
 private:
-    string _server_host;
-    string _server_port;
-    int _option_power_min;
-    boost::asio::io_service _io_service;
-    tcp::socket _socket;
+    bool connected;
+    string serverHost;
+    string serverPort;
+    string secretToken;
+    boost::asio::io_service ioService;
+    tcp::socket socket;
     enum { max_length = 1024 };
     string menu();
 };

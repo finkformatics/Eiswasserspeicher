@@ -3,19 +3,20 @@
 #include <iostream>
 #include <boost/date_time.hpp>
 #include <boost/thread.hpp>
-#include <string>
+#include "Logger.h"
 
 using namespace std;
 
 Simulator::Simulator(const char* config_file) : config(config_file), 
         reservoir(&config) {
-    controlServer = new ControlServer(this, ioService, config.getPort());
+    controlServer = new ControlServer(&config, this, ioService);
+    Logger::init(&config);
     ioService.run();
     controlServer->run();
 }
 
 void Simulator::run() {
-    cout << "Simulator started." << endl;
+    Logger::info("Simulator started");
     boost::posix_time::seconds sleepTime(1);
     while (true) {
         boost::this_thread::sleep(sleepTime);
@@ -23,11 +24,10 @@ void Simulator::run() {
     }
 }
 
-void Simulator::command(char* cmd) {
-    string str = cmd;
-    if (str == "ON") {
+void Simulator::command(string cmd) {
+    if (cmd == "#ON") {
         reservoir.enablePumps();
-    } else if (str == "OFF") {
+    } else if (cmd == "OFF") {
         reservoir.disablePumps();
     }
 }

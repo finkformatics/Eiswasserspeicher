@@ -1,11 +1,19 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
+#include <string>
+#include <iostream>
+
+using namespace std;
+
 class Configuration {
 public:
     Configuration(const char* config_file);
     int getPort() {
         return port;
+    }
+    string getSecretToken() {
+        return secretToken;
     }
     int getT_w() {
         return T_w;
@@ -25,6 +33,9 @@ public:
     double getQ() {
         return Q;
     }
+    int getLogLevel() {
+        return logLevel;
+    }
     
     double getC_p() {
         return c_p;
@@ -39,12 +50,14 @@ private:
     void load(const char* config_file);
     // From ini file
     int port; // ControlServer port
+    string secretToken;
     int T_w; // Gewünschte Milchtemperatur in C
     int T_m; // Eingangstemperatur der Milch in C
     int step; // Zeitschritt in min
     int m_s; // Speichervolumen in kg
     int t_l; // Ladezeit in h
     double Q; // Volumenstrom der Pumpen in l/min
+    int logLevel;
     // General constants
     double c_p; // Spezifische Wärmekapazität von Milch in kJ/(kg*K)
     double r_m; // Dichte von Milch in kg/l

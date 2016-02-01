@@ -7,13 +7,14 @@
 
 namespace po = boost::program_options;
 
-ControlClient::ControlClient(const char* config_file) : _socket(_io_service) {
+ControlClient::ControlClient(const char* config_file) : socket(ioService) {
+    connected = false;
     cout << "Starting control client" << endl;
     po::options_description desc("Parameters");
     desc.add_options()
-        ("server.host", po::value<string>(&_server_host), "server host")
-        ("server.port", po::value<string>(&_server_port), "server port")
-        ("options.power.min", po::value<int>(&_option_power_min), "minimum power");
+        ("server.host", po::value<string>(&serverHost), "server host")
+        ("server.port", po::value<string>(&serverPort), "server port")
+        ("server.secret.token", po::value<string>(&secretToken), "server secret token");
     po::variables_map vm;
     std::ifstream file(config_file, std::ifstream::in);
     cout << "Reading program parameters" << endl;
@@ -24,20 +25,34 @@ ControlClient::ControlClient(const char* config_file) : _socket(_io_service) {
 }
 
 ControlClient::~ControlClient() {
-    _socket.close();
+    socket.close();
 }
 
 void ControlClient::connect() {
     cout << "Trying to connect to control server" << endl;
-    _io_service.run();
-    tcp::resolver resolver(_io_service);
-    tcp::resolver::query query(tcp::v4(), _server_host, _server_port);
+    ioService.run();
+    tcp::resolver resolver(ioService);
+    tcp::resolver::query query(tcp::v4(), serverHost, serverPort);
     tcp::resolver::iterator iterator = resolver.resolve(query);
-    boost::asio::connect(_socket, iterator);
-    cout << "Connected" << endl;
+    boost::asio::connect(socket, iterator);
+            
+    boost::asio::write(socket, boost::asio::buffer(secretToken.c_str(), secretToken.length()));
+    char reply[2];
+    boost::asio::read(socket, boost::asio::buffer(reply, 2));
+    string rep = reply;
+    if (rep == "OK") {
+        cout << "Connected" << endl;
+        connected = true;
+    } else {
+        cout << "Error" << endl;
+    }
+    
 }
 
 void ControlClient::run() {
+    if (!connected) {
+        delete this;
+    }
     cout << "Control client started" << endl;
     for (;;) {
         try {
@@ -48,16 +63,16 @@ void ControlClient::run() {
                 break;
             }
             cout << "Sending command: " << choice << endl;;
-            boost::asio::write(_socket, boost::asio::buffer(choice.c_str(), choice.length()));
+            boost::asio::write(socket, boost::asio::buffer(choice.c_str(), choice.length()));
 
-            // 3 hardcoded
-            char reply[3];
-            size_t reply_length = boost::asio::read(_socket, boost::asio::buffer(reply, 3));
+            char reply[2];
+            size_t reply_length = boost::asio::read(socket, boost::asio::buffer(reply, 2));
             cout << "Server replied: ";
             cout.write(reply, reply_length);
             cout << endl;
         } catch (exception& e) {
             cerr << "Exception: " << e.what() << endl;
+            break;
         }
     }
     cout << "Closing control client" << endl;
@@ -78,7 +93,7 @@ string ControlClient::menu() {
     char* choiceCString = (char*)choice.c_str();
     long int choiceInt = strtol(choiceCString, &choiceCString, 10);
     if (choiceInt == 1) {
-        return "ON";
+        return "#ON";
     }
     if (choiceInt == 2) {
         return "OFF";
