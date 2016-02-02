@@ -14,6 +14,7 @@ private:
     Configuration* config;
     Pump pump1;
     Pump pump2;
+    SNull s0;
     int m_s;
     int t_l;
     int Q_s_max;
