@@ -30,13 +30,24 @@ public:
     int getT_l() {
         return t_l;
     }
+    int getPin() {
+        return pin;
+    }
+    int getWatt_per_pulse() {
+        return watt_per_pulse;
+    }
+    int getP_s() {
+        return P_s;
+    }
+    int getP_p() {
+        return P_p;
+    }
     double getQ() {
         return Q;
     }
     int getLogLevel() {
         return logLevel;
     }
-    
     double getC_p() {
         return c_p;
     }
@@ -56,6 +67,10 @@ private:
     int step; // Zeitschritt in min
     int m_s; // Speichervolumen in kg
     int t_l; // Ladezeit in h
+    int pin; // Pin für S0 Schnittstelle
+    int watt_per_pulse; // Watt die ein einem Impuls entsprechen
+    int P_s; // Leistung beim Laden
+    int P_p; // Leistung beim Kühlen
     double Q; // Volumenstrom der Pumpen in l/min
     int logLevel;
     // General constants

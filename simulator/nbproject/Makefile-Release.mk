@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU-MacOSX
+CND_DLIB_EXT=dylib
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Logger.o \
 	${OBJECTDIR}/Pump.o \
 	${OBJECTDIR}/Reservoir.o \
+	${OBJECTDIR}/SNull.o \
 	${OBJECTDIR}/Simulator.o \
 	${OBJECTDIR}/TcpSession.o \
 	${OBJECTDIR}/main.o
@@ -59,7 +60,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lboost_system -lpthread
+LDLIBSOPTIONS=-lboost_system -lpthread -lwiringPi
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -93,6 +94,11 @@ ${OBJECTDIR}/Reservoir.o: Reservoir.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Reservoir.o Reservoir.cpp
+
+${OBJECTDIR}/SNull.o: SNull.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SNull.o SNull.cpp
 
 ${OBJECTDIR}/Simulator.o: Simulator.cpp 
 	${MKDIR} -p ${OBJECTDIR}

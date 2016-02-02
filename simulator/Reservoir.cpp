@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c) {
+Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c), s0(c->getPin(), c->getWatt_per_pulse()) {
     config = c;
     
     m_s = config->getM_s();
@@ -49,8 +49,10 @@ void Reservoir::cool() {
     } else {
         Q_s = 0;
     }
+    s0.send(config->getP_p());
 }
 
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
+    s0.send(config->getP_s());
 }
