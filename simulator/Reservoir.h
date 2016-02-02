@@ -3,6 +3,7 @@
 
 #include "Configuration.h"
 #include "Pump.h"
+#include "SNull.h"
 
 class Reservoir {
 public:
