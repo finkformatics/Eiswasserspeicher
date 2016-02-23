@@ -22,7 +22,7 @@ AS=as
 
 # Macros
 CND_PLATFORM=GNU-Linux
-CND_DLIB_EXT=dylib
+CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -60,7 +60,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lboost_system -lpthread -lboost_thread -lboost_program_options -lwiringPi
+LDLIBSOPTIONS=-lpthread -lboost_thread -lboost_program_options -lwiringPi -lboost_system
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
