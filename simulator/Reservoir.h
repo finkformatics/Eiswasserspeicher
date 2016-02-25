@@ -24,7 +24,7 @@ private:
     
     void load();
     void cool();
-    bool timeToCool();
+    bool timeToLoad();
 };
 
 #endif /* RESERVOIR_H */

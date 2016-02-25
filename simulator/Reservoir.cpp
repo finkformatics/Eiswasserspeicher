@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/thread.hpp>
 
 using namespace std;
 using namespace boost::posix_time;
@@ -23,7 +24,7 @@ void Reservoir::step() {
     if ((pump1.isOn() || pump2.isOn()) && Q_s > 0) {
         Logger::debug("Cooling milk");
         cool();
-    } else if(Q_s < Q_s_max && timeToCool()) {
+    } else if(Q_s < Q_s_max && timeToLoad()) {
         Logger::debug("Loading reservoir");
         load();
     }
@@ -51,15 +52,15 @@ void Reservoir::cool() {
     } else {
         Q_s = 0;
     }
-    s0.send(config->getP_p());
+    boost::thread(boost::bind(&SNull::send, &s0, config->getP_p()));
 }
 
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
-    s0.send(config->getP_s());
+    boost::thread(boost::bind(&SNull::send, &s0, config->getP_s()));
 }
 
-bool Reservoir::timeToCool() {
+bool Reservoir::timeToLoad() {
     ptime now = second_clock::local_time();
     int currentHour = now.time_of_day().hours();
     int currentMinute = now.time_of_day().minutes();

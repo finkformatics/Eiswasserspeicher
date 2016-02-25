@@ -36,7 +36,8 @@ void Configuration::load(const char* config_file) {
         ("snull.watt.per.cool", po::value<int>(&P_p), "snull watt per cool")
         ("reservoir.capacity", po::value<int>(&m_s), "reservoir capacity")
         ("reservoir.loadingtime", po::value<int>(&t_l), "reservoir loading time")
-        ("reservoir.pumps.flow", po::value<double>(&Q), "pumps volume flow");
+        ("reservoir.pumps.flow", po::value<double>(&Q), "pumps volume flow")
+        ("simulator.debug", po::value<bool>(&debug), "simulator debugging");
     po::variables_map vm;
     std::ifstream file(config_file, std::ifstream::in);
     po::store(po::parse_config_file(file, desc), vm);

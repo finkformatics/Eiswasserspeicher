@@ -69,6 +69,9 @@ public:
     double getW_e() {
         return w_e;
     }
+    bool getDebug() {
+        return debug;
+    }
 private:
     void load(const char* config_file);
     // From ini file
@@ -89,6 +92,7 @@ private:
     int P_p; // Leistung beim Kühlen
     double Q; // Volumenstrom der Pumpen in l/min
     int logLevel;
+    bool debug;
     // General constants
     double c_p; // Spezifische Wärmekapazität von Milch in kJ/(kg*K)
     double r_m; // Dichte von Milch in kg/l

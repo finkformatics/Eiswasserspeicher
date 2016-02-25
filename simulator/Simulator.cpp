@@ -17,9 +17,11 @@ Simulator::Simulator(const char* config_file) : config(config_file),
 
 void Simulator::run() {
     Logger::info("Simulator started");
-    // int seconds = config->getStep() * 60;
-    // boost::posix_time::seconds sleepTime(seconds);
-    boost::posix_time::seconds sleepTime(1);
+    int seconds = config.getStep() * 60;
+    if (config.getDebug()) {
+        seconds = 1;
+    }
+    boost::posix_time::seconds sleepTime(seconds);
     while (true) {
         boost::this_thread::sleep(sleepTime);
         reservoir.step();

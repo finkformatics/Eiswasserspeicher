@@ -4,6 +4,7 @@
 #include <wiringPi.h>
 #endif
 #include <iostream>
+#include <boost/thread.hpp>
 
 // Standard constructor
 SNull::SNull(int pin, int watt_per_pulse) {
