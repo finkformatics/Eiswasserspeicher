@@ -24,6 +24,18 @@ public:
     int getStep() {
         return step;
     }
+    int getStartHour() {
+        return startHour;
+    }
+    int getStartMinute() {
+        return startMinute;
+    }
+    int getEndHour() {
+        return endHour;
+    }
+    int getEndMinute() {
+        return endMinute;
+    }
     int getM_s() {
         return m_s;
     }
@@ -65,6 +77,10 @@ private:
     int T_w; // Gewünschte Milchtemperatur in C
     int T_m; // Eingangstemperatur der Milch in C
     int step; // Zeitschritt in min
+    int startHour;
+    int startMinute;
+    int endHour;
+    int endMinute;
     int m_s; // Speichervolumen in kg
     int t_l; // Ladezeit in h
     int pin; // Pin für S0 Schnittstelle

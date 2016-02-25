@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <sstream>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 using namespace std;
+using namespace boost::posix_time;
 
 Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c), s0(c->getPin(), c->getWatt_per_pulse()) {
     config = c;
@@ -21,7 +23,7 @@ void Reservoir::step() {
     if ((pump1.isOn() || pump2.isOn()) && Q_s > 0) {
         Logger::debug("Cooling milk");
         cool();
-    } else if(Q_s < Q_s_max) { // TODO: Zeitsteuerung (12 - 16 Uhr)
+    } else if(Q_s < Q_s_max && timeToCool()) {
         Logger::debug("Loading reservoir");
         load();
     }
@@ -55,4 +57,14 @@ void Reservoir::cool() {
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
     s0.send(config->getP_s());
+}
+
+bool Reservoir::timeToCool() {
+    ptime now = second_clock::local_time();
+    int currentHour = now.time_of_day().hours();
+    int currentMinute = now.time_of_day().minutes();
+    return currentHour >= config->getStartHour() 
+            && (currentMinute >= config->getStartMinute() || currentHour != config->getStartHour())
+            && currentHour <= config->getEndHour() 
+            && (currentMinute <= config->getEndMinute() || currentHour < config->getEndHour());
 }
