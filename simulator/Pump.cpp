@@ -12,7 +12,7 @@ Pump::Pump(Configuration* c) {
 }
 
 double Pump::getM() {
-    return Q * config->getR_m() * (double)percent / 100.0;
+    return Q * config->getR_m() * 1.0 / 100.0;
 }
 
 bool Pump::isOn() {

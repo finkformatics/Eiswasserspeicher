@@ -19,7 +19,7 @@ void Simulator::run() {
     Logger::info("Simulator started");
     int seconds = config.getStep() * 60;
     if (config.getDebug()) {
-        seconds = 1;
+        seconds = 10;
     }
     boost::posix_time::seconds sleepTime(seconds);
     while (true) {
@@ -29,9 +29,9 @@ void Simulator::run() {
 }
 
 void Simulator::command(string cmd) {
-    if (cmd == "#ON") {
-        reservoir.enablePumps();
-    } else if (cmd == "OFF") {
-        reservoir.disablePumps();
+    if (cmd == "#TOGGLELOAD") {
+		reservoir.toggleLoading();
+    } else if (cmd == "#TOGGLECOOL") {
+        reservoir.toggleCooling(); 
     }
 }

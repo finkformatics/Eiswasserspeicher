@@ -33,14 +33,14 @@ void TcpSession::run() {
             oss << "Successfully paired with control client " << _socket.remote_endpoint().port();
             Logger::info(oss.str());
             boost::system::error_code ec;
-            _socket.write_some(boost::asio::buffer("OK", 2), ec);
+            _socket.write_some(boost::asio::buffer("OK", 3), ec);
             handle_write(ec);
         } else {
             delete this;
         }
     } else {
         boost::system::error_code ec;
-        _socket.write_some(boost::asio::buffer("NO", 2), ec);
+        _socket.write_some(boost::asio::buffer("NO", 3), ec);
         delete this;
     }
 }
@@ -61,7 +61,7 @@ void TcpSession::handle_read(size_t bytes_transferred, const boost::system::erro
         oss.clear();
         oss << "Writing ok to client " << _socket.remote_endpoint().port();
         Logger::debug(oss.str());
-        _socket.write_some(boost::asio::buffer("OK", 2), ec);
+        _socket.write_some(boost::asio::buffer("OK", 3), ec);
         handle_write(ec);
     } else {
         delete this;
