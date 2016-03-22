@@ -101,13 +101,3 @@ void Reservoir::cool() {
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
 }
-
-bool Reservoir::timeToLoad() {
-    ptime now = second_clock::local_time();
-    int currentHour = now.time_of_day().hours();
-    int currentMinute = now.time_of_day().minutes();
-    return currentHour >= config->getStartHour() 
-            && (currentMinute >= config->getStartMinute() || currentHour != config->getStartHour())
-            && currentHour <= config->getEndHour() 
-            && (currentMinute <= config->getEndMinute() || currentHour < config->getEndHour());
-}
