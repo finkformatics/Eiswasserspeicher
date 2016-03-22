@@ -2,7 +2,6 @@
 #define RESERVOIR_H
 
 #include "Configuration.h"
-#include "Pump.h"
 #include "SNull.h"
 
 
@@ -23,8 +22,6 @@ public:
 
 private:
     Configuration* config;
-    Pump pump1;
-    Pump pump2;
     SNull s0;
     State currentState;
     int m_s;

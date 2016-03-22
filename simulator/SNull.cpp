@@ -6,71 +6,73 @@
 #include <iostream>
 #include <boost/thread.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+#include "Logger.h"
 
 
 // Standard constructor
-SNull::SNull(int pin, int watt_per_pulse) {
+
+SNull::SNull(Configuration* c) {
+    config = c;
 #ifdef __arm__
-	wiringPiSetup();
-#endif	
-	_pin = pin;
-	_watt_per_pulse = watt_per_pulse;
-	_loading = false;
-	_cooling = false;
+    wiringPiSetup();
+#endif 
+    _loading = false;
+    _cooling = false;
 #ifdef __arm__
-	pinMode(_pin, OUTPUT);
+    pinMode(config->getPin(), OUTPUT);
 #endif
 }
 
 using namespace std;
 
 void SNull::run() {
-	int P_p = 500;
-	int P_s = 3570;
-	int pulse_kw = 1000;
-	int pulse_w = 1;
-	int stepDuration = 15 * 60 * 1000; // in millisec
+    int millis = config->getStep() * 60 * 1000;
+    if (config->getDebug()) {
+        millis = 10 * 1000;
+    }
 
-	while(true) {
-		int P = 0;
-		if (_loading) P += P_s;
-		if (_cooling) P += P_p;
-		
-		if (P > 0) {
-			int pulses = pulse_w * P;
-		
-			int sleepMs = stepDuration / pulses - 2 * DELAY;
-			
-			pulse();
-			boost::posix_time::millisec sleepTime(sleepMs);
-			boost::this_thread::sleep(sleepTime);	
-		}
-	}
+    while (true) {
+        int P = 0;
+        if (_loading) P += config->getP_s();
+        if (_cooling) P += config->getP_p();
+
+        if (P > 0) {
+            int pulses = config->getWatt_per_pulse() * P;
+
+            int sleepMs = millis / pulses - 2 * DELAY;
+
+            pulse();
+            boost::posix_time::millisec sleepTime(sleepMs);
+            boost::this_thread::sleep(sleepTime);
+        }
+    }
 }
 
 void SNull::toggleLoading() {
-	_loading = !_loading;
+    _loading = !_loading;
 }
 
 void SNull::toggleCooling() {
-	_cooling = !_cooling;
+    _cooling = !_cooling;
 }
 
 // Send watts
+
 void SNull::send(int watt) {
-	int times = watt / _watt_per_pulse;
-	for(int i = 0; i < times; i++) {
-		pulse();
-	}
+    int times = watt / config->getWatt_per_pulse();
+    for (int i = 0; i < times; i++) {
+        pulse();
+    }
 }
 
 // Send the pulse
+
 void SNull::pulse() {
 #ifdef __arm__
-	digitalWrite(_pin, HIGH);
-	delay(SNull::DELAY);
-	digitalWrite(_pin, LOW);
-	delay(SNull::DELAY);
+    digitalWrite(config->getPin(), HIGH);
+    delay(SNull::DELAY);
+    digitalWrite(config->getPin(), LOW);
+    delay(SNull::DELAY);
 #endif
-	cout << "Sending pulse" << endl;
+    Logger::trace("Sending pulse");
 }

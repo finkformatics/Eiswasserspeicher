@@ -9,7 +9,7 @@
 using namespace std;
 using namespace boost::posix_time;
 
-Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c), s0(c->getPin(), c->getWatt_per_pulse()) {
+Reservoir::Reservoir(Configuration* c) : s0(c) {
     config = c;
     
     currentState = NONE;
@@ -26,23 +26,20 @@ Reservoir::Reservoir(Configuration* c) : pump1(c), pump2(c), s0(c->getPin(), c->
 
 void Reservoir::step() {
 	if (currentState == COOLING || currentState == BOTH) {
-		Logger::debug("Cooling milk");
+        Logger::debug("Cooling milk");
         cool();
 	}
-	
 	if (currentState == LOADING || currentState == BOTH) {
-		Logger::debug("Loading reservoir");
+        Logger::debug("Loading reservoir");
         load();
 	}
-	
 	if (toggleS0Loading) {
-		toggleS0Loading = false;
-		s0.toggleLoading();
+        toggleS0Loading = false;
+        s0.toggleLoading();
 	}
-	
 	if (toggleS0Cooling) {
-		toggleS0Cooling = false;
-		s0.toggleCooling();
+        toggleS0Cooling = false;
+        s0.toggleCooling();
 	}
 
     ostringstream oss;
@@ -52,39 +49,57 @@ void Reservoir::step() {
 
 void Reservoir::toggleLoading() {
 	switch(currentState) {
-		case NONE: currentState = LOADING; break;
-		case LOADING: currentState = NONE; break;
-		case COOLING: currentState = BOTH; break;
-		case BOTH: currentState = COOLING; break;
-		default: currentState = NONE; break;
+		case NONE: 
+            currentState = LOADING; 
+            break;
+		case LOADING: 
+            currentState = NONE; 
+            break;
+		case COOLING: 
+            currentState = BOTH; 
+            break;
+		case BOTH: 
+            currentState = COOLING; 
+            break;
+		default: 
+            currentState = NONE; 
+            break;
 	}
 	toggleS0Loading = !toggleS0Loading;
 }
 
 void Reservoir::toggleCooling() {
 	switch(currentState) {
-		case NONE: currentState = COOLING; break;
-		case LOADING: currentState = BOTH; break;
-		case COOLING: currentState = NONE; break;
-		case BOTH: currentState = LOADING; break;
-		default: currentState = NONE; break;
+		case NONE: 
+            currentState = COOLING; 
+            break;
+		case LOADING: 
+            currentState = BOTH; 
+            break;
+		case COOLING: 
+            currentState = NONE; 
+            break;
+		case BOTH: 
+            currentState = LOADING; 
+            break;
+		default: 
+            currentState = NONE; 
+            break;
 	}
 	toggleS0Cooling = !toggleS0Cooling;
 }
 
 void Reservoir::cool() {
-    double Q_w = (8.3 + 8.3) * config->getC_p() * (config->getT_m() - config->getT_w()) * config->getStep();
+    double Q_w = 2 * config->getQ() * config->getC_p() * (config->getT_m() - config->getT_w()) * config->getStep();
     if (Q_w < Q_s) {
         Q_s -= Q_w;
     } else {
         Q_s = 0;
     }
-    //boost::thread(boost::bind(&SNull::send, &s0, config->getP_p()));
 }
 
 void Reservoir::load() {
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
-    //boost::thread(boost::bind(&SNull::send, &s0, config->getP_s()));
 }
 
 bool Reservoir::timeToLoad() {

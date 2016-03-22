@@ -30,7 +30,7 @@ void Simulator::run() {
 
 void Simulator::command(string cmd) {
     if (cmd == "#TOGGLELOAD") {
-		reservoir.toggleLoading();
+        reservoir.toggleLoading();
     } else if (cmd == "#TOGGLECOOL") {
         reservoir.toggleCooling(); 
     }

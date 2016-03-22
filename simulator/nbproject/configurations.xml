@@ -7,7 +7,6 @@
       <itemPath>Configuration.h</itemPath>
       <itemPath>ControlServer.h</itemPath>
       <itemPath>Logger.h</itemPath>
-      <itemPath>Pump.h</itemPath>
       <itemPath>Reservoir.h</itemPath>
       <itemPath>SNull.h</itemPath>
       <itemPath>Simulator.h</itemPath>
@@ -24,7 +23,6 @@
       <itemPath>Configuration.cpp</itemPath>
       <itemPath>ControlServer.cpp</itemPath>
       <itemPath>Logger.cpp</itemPath>
-      <itemPath>Pump.cpp</itemPath>
       <itemPath>Reservoir.cpp</itemPath>
       <itemPath>SNull.cpp</itemPath>
       <itemPath>Simulator.cpp</itemPath>
@@ -73,10 +71,6 @@
       <item path="Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Logger.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Pump.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Pump.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Reservoir.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -137,10 +131,6 @@
       <item path="Logger.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Logger.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Pump.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Pump.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Reservoir.cpp" ex="false" tool="1" flavor2="0">
       </item>

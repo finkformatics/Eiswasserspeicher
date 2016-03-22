@@ -8,6 +8,7 @@ const int Logger::ERROR = 10;
 const int Logger::WARN = 20;
 const int Logger::INFO = 30;
 const int Logger::DEBUG = 40;
+const int Logger::TRACE = 50;
 
 int Logger::level = 30;
 
@@ -29,6 +30,10 @@ void Logger::info(string message) {
 
 void Logger::debug(string message) {
     log(DEBUG, "DEBUG", message);
+}
+
+void Logger::trace(string message) {
+    log(TRACE, "TRACE", message);
 }
 
 void Logger::log(int level, string levelMsg, string message) {
