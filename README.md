@@ -15,13 +15,13 @@ Der ControlClient muss mit der `parameters.ini` als Kommandozeilenargument gesta
 Der Simulator teilt sich in mehrere kleinere Funktionseinheiten auf. Auf der einen Seite stehen die organisatorischen Teile, die das Logging, die Verbindung zum Client und das Laden der Parameter verwalten. Auf der anderen Seite steht der Simulator, welcher wieder in kleinere Einheiten aufgeteilt ist:
 
 1. Simulator, als übergeordnete Einheit
-2. Reservoir, als Speicher für das Eis und Koordinator (enthält Pumpen und S0-Schnittstelle)
-3. SNull
+2. Reservoir, als Speicher für das Eis und Koordinato
+3. S0-Schnittstelle
 
 Der Simulator führt die Simulation in einem eigenen Thread aus und reagiert auf die Kommandos, die vom Client gesendet werden. 
 
 ### Speicher
-Das Reservoir, der eigentliche Eiswasserspeicher, setzt das mathematische Modell um und führt in der `step` Methode entweder das Laden oder Kühlen um. Dies würde darüber entschieden, ob die Pumpen an sind, geladen werden kann (Zeitsteuerung 12-16 Uhr) oder genug Eis im Speicher ist. Das Laden und Kühlen findet den den dafür vorgesehen Methoden, `load` und `cool` statt. Am Ende einer dieser beiden Methoden wird die Leistung mit der S0-Schnittstelle übertragen.
+Das Reservoir, der eigentliche Eiswasserspeicher, setzt das mathematische Modell um und führt in der `step` Methode entweder das Laden oder Kühlen um. Das Laden und Kühlen findet den den dafür vorgesehen Methoden, `load` und `cool` statt. Am Ende einer dieser beiden Methoden wird die Leistung mit der S0-Schnittstelle übertragen.
 
 ### S0-Schnittstelle
 Die S0-Schnittstelle ist die letzte wichtige Komponente. Sie dient als Datenübertragungsschnittstelle für externe Geräte, um die Leistung des Eiswasserspeicher mitzuteilen. Die S0-Schnittstelle setzt die Bibliothek [wiringPi](http://wiringpi.com) vorraus, damit die I/O Pins des RapsberryPis angesprochen werden können. Damit eine galvanische Trennung zwischen Simulator und externen Geräten stattfinden kann, muss ein Optokoppler eingesetzt werden. Nachfolgendes Schema zeigt einen groben Aufbau davon, welcher einen Arduino als Datenlogger einsetzt.
