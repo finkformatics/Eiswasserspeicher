@@ -1,16 +1,26 @@
 #ifndef SNULL_H
 #define SNULL_H
 
+#include "Configuration.h"
+
 class SNull {
-	public:
-		SNull(int pin, int watt_per_pulse);
-		void send(int watt); // Send the watts as pulses
-		static const int DELAY = 30; // Delay for S0 interface
-		
-	private:
-		int _pin; // pin for S0 interface
-		int _watt_per_pulse; // How many watts is a pulse
-		void pulse(); // Pulse function
+public:
+    SNull(Configuration* c);
+    void run();
+    void send(int watt); // Send the watts as pulses
+    void toggleLoading();
+    void toggleCooling();
+    void loadingOn();
+    void loadingOff();
+    void coolingOn();
+    void coolingOff();
+    static const int DELAY = 30; // Delay for S0 interface
+
+private:
+    Configuration* config;
+    bool _loading;
+    bool _cooling;
+    void pulse(); // Pulse function
 };
 
 #endif

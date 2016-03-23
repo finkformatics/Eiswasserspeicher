@@ -38,7 +38,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Configuration.o \
 	${OBJECTDIR}/ControlServer.o \
 	${OBJECTDIR}/Logger.o \
-	${OBJECTDIR}/Pump.o \
 	${OBJECTDIR}/Reservoir.o \
 	${OBJECTDIR}/SNull.o \
 	${OBJECTDIR}/Simulator.o \
@@ -84,11 +83,6 @@ ${OBJECTDIR}/Logger.o: Logger.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Logger.o Logger.cpp
-
-${OBJECTDIR}/Pump.o: Pump.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Pump.o Pump.cpp
 
 ${OBJECTDIR}/Reservoir.o: Reservoir.cpp 
 	${MKDIR} -p ${OBJECTDIR}

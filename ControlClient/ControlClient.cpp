@@ -37,8 +37,8 @@ void ControlClient::connect() {
     boost::asio::connect(socket, iterator);
             
     boost::asio::write(socket, boost::asio::buffer(secretToken.c_str(), secretToken.length()));
-    char reply[2];
-    boost::asio::read(socket, boost::asio::buffer(reply, 2));
+    char reply[3];
+    boost::asio::read(socket, boost::asio::buffer(reply, 3));
     string rep = reply;
     if (rep == "OK") {
         cout << "Connected" << endl;
@@ -63,10 +63,10 @@ void ControlClient::run() {
                 break;
             }
             cout << "Sending command: " << choice << endl;;
-            boost::asio::write(socket, boost::asio::buffer(choice.c_str(), choice.length()));
+            boost::asio::write(socket, boost::asio::buffer(choice.c_str(), choice.length() + 1));
 
-            char reply[2];
-            size_t reply_length = boost::asio::read(socket, boost::asio::buffer(reply, 2));
+            char reply[3];
+            size_t reply_length = boost::asio::read(socket, boost::asio::buffer(reply, 3));
             cout << "Server replied: ";
             cout.write(reply, reply_length);
             cout << endl;
@@ -81,8 +81,8 @@ void ControlClient::run() {
 
 string ControlClient::menu() {
     cout << "You have the following options:" << endl;
-    cout << "[1] ON" << endl;
-    cout << "[2] OFF" << endl;
+    cout << "[1] TOGGLE LOADING" << endl;
+    cout << "[2] TOGGLE COOLING" << endl;
     cout << "[X] Exit" << endl;
     cout << "Your choice: " << endl;
     string choice;
@@ -93,11 +93,12 @@ string ControlClient::menu() {
     char* choiceCString = (char*)choice.c_str();
     long int choiceInt = strtol(choiceCString, &choiceCString, 10);
     if (choiceInt == 1) {
-        return "#ON";
+        return "#TOGGLELOAD";
     }
     if (choiceInt == 2) {
-        return "OFF";
+        return "#TOGGLECOOL";
     }
+
     cerr << "Option not supported!" << endl;
     return "NONE";
 }

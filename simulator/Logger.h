@@ -17,8 +17,10 @@ public:
     static void warn(string message);
     static void info(string message);
     static void debug(string message);
+    static void trace(string message);
 private:
     static int level;
+    static const int TRACE;
     static const int DEBUG;
     static const int INFO;
     static const int WARN;
