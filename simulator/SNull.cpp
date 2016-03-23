@@ -20,6 +20,7 @@ SNull::SNull(Configuration* c) {
     _cooling = false;
 #ifdef __arm__
     pinMode(config->getPin(), OUTPUT);
+    digitalWrite(config->getPin(), LOW);
 #endif
 }
 
@@ -39,8 +40,7 @@ void SNull::run() {
         if (P > 0) {
             int pulses = config->getWatt_per_pulse() * P;
 
-            int sleepMs = millis / pulses - 2 * DELAY;
-
+            long sleepMs = (60 * 60 * 1000) / pulses - 2 * DELAY;
             pulse();
             boost::posix_time::millisec sleepTime(sleepMs);
             boost::this_thread::sleep(sleepTime);
@@ -56,6 +56,21 @@ void SNull::toggleCooling() {
     _cooling = !_cooling;
 }
 
+void SNull::loadingOn() {
+    _loading = true;
+}
+
+void SNull::loadingOff() {
+    _loading = false;
+}
+
+void SNull::coolingOn() {
+    _cooling = true;
+}
+
+void SNull::coolingOff() {
+    _cooling = false;
+}
 // Send watts
 
 void SNull::send(int watt) {

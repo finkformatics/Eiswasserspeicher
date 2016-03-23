@@ -10,6 +10,10 @@ public:
     void send(int watt); // Send the watts as pulses
     void toggleLoading();
     void toggleCooling();
+    void loadingOn();
+    void loadingOff();
+    void coolingOn();
+    void coolingOff();
     static const int DELAY = 30; // Delay for S0 interface
 
 private:

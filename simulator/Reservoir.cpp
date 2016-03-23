@@ -25,22 +25,18 @@ Reservoir::Reservoir(Configuration* c) : s0(c) {
 }
 
 void Reservoir::step() {
-	if (currentState == COOLING || currentState == BOTH) {
+    if (currentState == COOLING || currentState == BOTH) {
         Logger::debug("Cooling milk");
         cool();
-	}
-	if (currentState == LOADING || currentState == BOTH) {
+    } else {
+           s0.coolingOff();
+    }
+    if (currentState == LOADING || currentState == BOTH) {
         Logger::debug("Loading reservoir");
         load();
-	}
-	if (toggleS0Loading) {
-        toggleS0Loading = false;
-        s0.toggleLoading();
-	}
-	if (toggleS0Cooling) {
-        toggleS0Cooling = false;
-        s0.toggleCooling();
-	}
+    } else {
+            s0.loadingOff();
+    }
 
     ostringstream oss;
     oss << "Q_s = " << Q_s;
@@ -65,7 +61,6 @@ void Reservoir::toggleLoading() {
             currentState = NONE; 
             break;
 	}
-	toggleS0Loading = !toggleS0Loading;
 }
 
 void Reservoir::toggleCooling() {
@@ -86,18 +81,24 @@ void Reservoir::toggleCooling() {
             currentState = NONE; 
             break;
 	}
-	toggleS0Cooling = !toggleS0Cooling;
 }
 
 void Reservoir::cool() {
-    double Q_w = 2 * config->getQ() * config->getC_p() * (config->getT_m() - config->getT_w()) * config->getStep();
+    double Q_w = 2 * config->getQ() * config->getR_m() * config->getC_p() * (config->getT_m() - config->getT_w()) * config->getStep();
     if (Q_w < Q_s) {
+        s0.coolingOn();
         Q_s -= Q_w;
     } else {
+        s0.coolingOff();
         Q_s = 0;
     }
 }
 
 void Reservoir::load() {
+    if(Q_s < Q_s_max) {
+       s0.loadingOn();
+    } else {
+       s0.loadingOff();
+    }
     Q_s = (Q_s < Q_s_max - Q_l) ? Q_s + Q_l : Q_s_max;
 }

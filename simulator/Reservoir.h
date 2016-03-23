@@ -30,9 +30,6 @@ private:
     double Q_s;
     double Q_l;
     
-    bool toggleS0Loading;
-    bool toggleS0Cooling;
-    
     void load();
     void cool();
 };
